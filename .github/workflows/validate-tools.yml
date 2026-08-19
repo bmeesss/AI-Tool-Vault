@@ -1,0 +1,147 @@
+name: Validate AI Tool Vault
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate tools and documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Validate tool structure and metadata
+        shell: python
+        run: |
+          import pathlib, re, sys
+          from urllib.parse import urlparse
+
+          ROOT = pathlib.Path('.')
+          TOOLS_DIR = ROOT / 'tools'
+          INDEX = ROOT / 'TOOLS.md'
+
+          expected_files = {
+              'ai-writing.md': 'AI Writing',
+              'ai-image.md': 'AI Image',
+              'ai-video.md': 'AI Video',
+              'ai-coding.md': 'AI Coding',
+              'ai-productivity.md': 'AI Productivity',
+              'ai-audio.md': 'AI Audio',
+          }
+          required_fields = [
+              'Official website', 'Category', 'Pricing model',
+              'Best application', 'Description', 'Why useful', 'Tags'
+          ]
+
+          errors = []
+          tools = []
+
+          if not TOOLS_DIR.is_dir():
+              errors.append('Missing required directory: tools/')
+          if not INDEX.is_file():
+              errors.append('Missing required file: TOOLS.md')
+
+          for filename, expected_category in expected_files.items():
+              path = TOOLS_DIR / filename
+              if not path.is_file():
+                  errors.append(f'Missing required tool category file: {path}')
+                  continue
+
+              text = path.read_text(encoding='utf-8')
+              headings = re.findall(r'^##\s+(.+?)\s*$', text, re.M)
+              if not headings:
+                  errors.append(f'{path}: no tool entries found (expected ## Tool Name headings)')
+                  continue
+
+              for name in headings:
+                  if name.strip().lower() == 'readme':
+                      continue
+                  tools.append((name.strip(), path, text))
+
+                  start = text.find(f'## {name}')
+                  next_heading = re.search(r'^##\s+', text[start + len(name) + 3:], re.M)
+                  section = text[start:] if not next_heading else text[start:start + len(name) + 3 + next_heading.start()]
+
+                  for field in required_fields:
+                      if not re.search(rf'^- \*\*{re.escape(field)}:\*\*\s*.+$', section, re.M):
+                          errors.append(f'{path}: {name}: missing or empty `{field}` field')
+
+                  m = re.search(r'^- \*\*Official website:\*\*\s*(\S+)', section, re.M)
+                  if m:
+                      url = m.group(1).strip('<>')
+                      parsed = urlparse(url)
+                      if parsed.scheme != 'https' or not parsed.netloc:
+                          errors.append(f'{path}: {name}: official website must be a valid HTTPS URL')
+                  m = re.search(r'^- \*\*Category:\*\*\s*(.+)$', section, re.M)
+                  if m and m.group(1).strip() != expected_category:
+                      errors.append(f'{path}: {name}: category must be `{expected_category}`')
+
+          names = [name.casefold() for name, _, _ in tools]
+          duplicates = sorted({n for n in names if names.count(n) > 1})
+          for duplicate in duplicates:
+              errors.append(f'Duplicate tool name: {duplicate}')
+
+          index_text = INDEX.read_text(encoding='utf-8') if INDEX.is_file() else ''
+          index_names = set(re.findall(r'^###\s+(.+?)\s*$', index_text, re.M))
+          tool_names = {name for name, _, _ in tools}
+          missing_from_index = sorted(tool_names - index_names)
+          extra_in_index = sorted(index_names - tool_names)
+          for name in missing_from_index:
+              errors.append(f'TOOLS.md is missing tool: {name}')
+          for name in extra_in_index:
+              errors.append(f'TOOLS.md contains unknown tool: {name}')
+
+          if index_names and len(index_names) != len(tool_names):
+              errors.append(f'TOOLS.md/tool files count mismatch: index={len(index_names)}, files={len(tool_names)}')
+
+          if errors:
+              print('Validation failed:')
+              print('\n'.join(f'- {e}' for e in errors))
+              sys.exit(1)
+
+          print(f'Validated {len(tools)} tools successfully.')
+
+      - name: Check internal Markdown links
+        shell: bash
+        run: |
+          python - <<'PY'
+          import pathlib, re, sys
+          from urllib.parse import urlparse
+
+          errors = []
+          for path in pathlib.Path('.').rglob('*.md'):
+              if any(part in {'.git', 'node_modules'} for part in path.parts):
+                  continue
+              text = path.read_text(encoding='utf-8')
+              for target in re.findall(r'(?<!!)\[[^\]]*\]\(([^)]+)\)', text):
+                  target = target.strip().split()[0].strip('<>')
+                  if not target or target.startswith('#'):
+                      continue
+                  parsed = urlparse(target)
+                  if parsed.scheme or target.startswith('//'):
+                      continue
+                  target_path = (path.parent / parsed.path).resolve()
+                  if not target_path.exists():
+                      errors.append(f'{path}: broken internal link -> {target}')
+          if errors:
+              print('\n'.join(f'- {e}' for e in errors))
+              sys.exit(1)
+          print('All internal Markdown links resolve.')
+          PY
+
+      - name: Validate Markdown syntax
+        uses: DavidAnson/markdownlint-cli2-action@v20
+        with:
+          globs: '**/*.md'
