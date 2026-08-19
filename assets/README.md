@@ -1,31 +1,26 @@
-# Brand Assets
+# Assets
 
-This directory is reserved for AI Tool Vault brand and content assets.
+Official AI Tool Vault brand assets and reusable social-media resources.
 
-## Planned structure
+## Structure
 
 ```text
 assets/
 ├── README.md
 ├── logo/
 │   ├── aiv-logo.svg
-│   ├── aiv-logo.png
-│   └── aiv-icon.png
-├── social/
-│   ├── tiktok-template.png
-│   ├── slideshow-template.png
-│   └── cover-template.png
-└── references/
-    └── official-brand-links.md
+│   ├── aiv-logo-dark.svg
+│   └── aiv-icon.svg
+└── social/
+    ├── README.md
+    └── templates/
+        └── README.md
 ```
 
-## Asset rules
+## Logo files
 
-- Store AI Tool Vault's own logo and templates here.
-- Do not copy third-party logos or screenshots into the repository without checking their usage rights.
-- Prefer linking to official brand assets when redistribution is not clearly permitted.
-- Keep source files and export files clearly separated when both are available.
+- `logo/aiv-logo.svg` — primary logo for dark backgrounds.
+- `logo/aiv-logo-dark.svg` — logo for light backgrounds.
+- `logo/aiv-icon.svg` — compact icon/monogram for profile pictures and small placements.
 
-## Current status
-
-The repository structure is ready for the visual assets. Binary brand files should be added separately once the final AI Tool Vault logo and templates are approved.
+The SVGs are designed to remain sharp at any resolution.
