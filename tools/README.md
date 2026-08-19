@@ -1,6 +1,6 @@
 # AI Tools
 
-The AI Tool Vault directory contains curated AI tools organized by category.
+This directory contains curated AI tools grouped by use case.
 
 ## Categories
 
@@ -11,27 +11,19 @@ The AI Tool Vault directory contains curated AI tools organized by category.
 - [AI Productivity](ai-productivity.md)
 - [AI Audio](ai-audio.md)
 
-## Tool Information
+For the complete overview, see [../TOOLS.md](../TOOLS.md).
 
-Every tool should include:
+## Tool entry standard
 
+Every tool entry contains:
+
+- Name
 - Official website
 - Category
-- Pricing
-- Main use case
-- Short description
+- Pricing model
+- Best application
+- Description
 - Why it is useful
+- Tags
 
-## Quality Standard
-
-AI Tool Vault focuses on quality over quantity.
-
-Tools should be:
-
-- Useful
-- Relevant
-- Accessible
-- Clearly explained
-- Verified before being added
-
-Pricing and features can change over time, so important information should be checked against the tool's official website.
+Pricing and feature information is intentionally kept at the plan-model level where details change frequently. Always check the official website for current prices.

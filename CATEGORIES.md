@@ -1,69 +1,43 @@
 # Categories
 
-AI Tool Vault organizes tools into clear categories.
+AI Tool Vault organizes tools by the job they help you do.
 
 ## AI Writing
 
-Tools for:
+Writing, rewriting, summarization, research and text generation.
 
-- Writing
-- Rewriting
-- Summarization
-- Research
-- Brainstorming
-- Translation
+[Browse AI Writing tools](tools/ai-writing.md)
 
 ## AI Image
 
-Tools for:
+Image generation, editing, design, typography and visual creation.
 
-- Image generation
-- Image editing
-- Background removal
-- Design
-- Upscaling
-- Product imagery
+[Browse AI Image tools](tools/ai-image.md)
 
 ## AI Video
 
-Tools for:
+Text-to-video, image-to-video, video generation and creative production.
 
-- Text-to-video
-- Image-to-video
-- Video editing
-- AI avatars
-- Short-form content
-- Video enhancement
+[Browse AI Video tools](tools/ai-video.md)
 
 ## AI Coding
 
-Tools for:
+Code generation, code completion, debugging and AI-assisted software development.
 
-- Code generation
-- Debugging
-- Code completion
-- Software development
-- Documentation
-- Developer workflows
+[Browse AI Coding tools](tools/ai-coding.md)
 
 ## AI Productivity
 
-Tools for:
+Research, notes, automation, planning and workflow management.
 
-- Automation
-- Notes
-- Meetings
-- Task management
-- Research
-- Workflows
+[Browse AI Productivity tools](tools/ai-productivity.md)
 
 ## AI Audio
 
-Tools for:
+Voice generation, music generation, transcription and audio editing.
 
-- Voice generation
-- Voice cloning
-- Music generation
-- Audio editing
-- Speech-to-text
-- Text-to-speech
+[Browse AI Audio tools](tools/ai-audio.md)
+
+## Curation rule
+
+A tool should have a real official website and a clear practical use case before it is added. Pricing and features should be checked against the official website because they can change.
