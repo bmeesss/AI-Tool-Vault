@@ -31,6 +31,7 @@ Full category: [tools/ai-image.md](tools/ai-image.md)
 | [Runway](https://runwayml.com/) | Generative video and creative production | Free + paid plans |
 | [Pika](https://pika.art/) | Short AI video effects and generation | Free + paid plans |
 | [Luma](https://lumalabs.ai/) | Cinematic AI video and creative workflows | Free trial + paid plans |
+| [ReelAI](https://tryreelai.com/) | Photo-to-video preset effects | Paid plans; free usage not verified |
 
 Full category: [tools/ai-video.md](tools/ai-video.md)
 
