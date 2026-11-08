@@ -31,3 +31,13 @@
 - **Description:** Luma is a creative AI platform with Ray video generation, image generation and agentic creative workflows in its consumer app.
 - **Why useful:** It combines video, image and creative-agent workflows in one environment and supports detailed control over generated media.
 - **Tags:** `video-generation` `text-to-video` `image-to-video` `creative-ai` `ray`
+
+## ReelAI
+
+- **Official website:** https://tryreelai.com/
+- **Category:** AI Video
+- **Pricing model:** Paid plans; see [official pricing](https://tryreelai.com/pricing) (checked 2026-11-08). Free usage limits not verified.
+- **Best application:** Photo-to-video preset effects for short-form content
+- **Description:** ReelAI creates short AI videos from photos using preset effects.
+- **Why useful:** A preset provides a defined starting point for a specific visual effect, such as the [Rumpelstiltskin trend](https://tryreelai.com/presets/rumpelstiltskin-ai-video-trend).
+- **Tags:** `video-generation` `image-to-video` `effects` `short-form`
